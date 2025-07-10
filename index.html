@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>MAHARAJA STORE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Jasa Gift Item Mobile Legends</h1>
+
+  <div class="container">
+
+    <!-- Produk -->
+    <div class="product">
+      <img src="/Maharaja-store/image/epic.jpeg" alt="Skin Epic Shop">
+      <h3>Skin Epic Shop</h3>
+      <p>Rp <span class="price">110000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+    <div class="product">
+      <img src="/Maharaja-store/image/spesial.jpeg" alt="Skin Special Shop">
+      <h3>Skin Special Shop</h3>
+      <p>Rp <span class="price">81000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+    <div class="product">
+      <img src="/Maharaja-store/image/elite.jpeg" alt="Skin Elite Shop">
+      <h3>Skin Elite Shop</h3>
+      <p>Rp <span class="price">65000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+    <div class="product">
+      <img src="/Maharaja-store/image/Name-Change-Card.jpeg" alt="Change Name Card">
+      <h3>Change Name Card</h3>
+      <p>Rp <span class="price">30000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+    <div class="product">
+      <img src="/Maharaja-store/image/flag.jpeg" alt="Flag Change Card">
+      <h3>Flag Change Card</h3>
+      <p>Rp <span class="price">35000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+    <div class="product">
+      <img src="/Maharaja-store/image/SL card.jpeg" alt="Starlight Card">
+      <h3>Starlight Card</h3>
+      <p>Rp <span class="price">40000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+    <div class="product">
+      <img src="/Maharaja-store/image/SL prem.jpeg" alt="Premium Starlight Card">
+      <h3>Premium Starlight Card</h3>
+      <p>Rp <span class="price">90000</span></p>
+      Jumlah: <input type="number" class="qty" min="0" value="0">
+    </div>
+
+  </div>
+
+  <!-- Checkout Section -->
+  <div class="checkout">
+    <h2>Checkout</h2>
+    <label>Nickname:
+      <input type="text" id="nickname" placeholder="Contoh: MaharaJawa">
+    </label>
+    <label>ID:
+      <input type="text" id="id" placeholder="Contoh: 123456789">
+    </label>
+    <label>Server:
+      <input type="text" id="server" placeholder="Contoh: 1234">
+    </label>
+
+    <p><strong>Total Belanja:</strong> Rp <span id="grand-total">0</span></p>
+    <a id="whatsapp-link" class="buy-button" href="#" target="_blank">Beli via WhatsApp</a>
+  </div>
+
+  <script>
+    const nomorAdmin = "6281234567890";
+
+    const qtyInputs = document.querySelectorAll('.qty');
+    const prices = document.querySelectorAll('.price');
+    const productNames = document.querySelectorAll('.product h3');
+    const totalDisplay = document.getElementById('grand-total');
+    const waLink = document.getElementById('whatsapp-link');
+
+    const nickname = document.getElementById('nickname');
+    const id = document.getElementById('id');
+    const server = document.getElementById('server');
+
+    function updateTotal() {
+      let total = 0;
+      let pesan = "Halo admin, saya ingin membeli:\n";
+      qtyInputs.forEach((input, index) => {
+        const qty = parseInt(input.value);
+        const price = parseInt(prices[index].textContent);
+        const name = productNames[index].textContent;
+
+        if (qty > 0) {
+          const subtotal = qty * price;
+          total += subtotal;
+          pesan += `- ${name} x${qty} = Rp${subtotal}\n`;
+        }
+      });
+
+      totalDisplay.textContent = total;
+
+      if (total > 0) {
+        pesan += `\nTotal: Rp${total}`;
+        pesan += `\n\n📌 Data Akun ML:\n- Nickname: ${nickname.value}\n- ID: ${id.value}\n- Server: ${server.value}`;
+
+        const url = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`;
+        waLink.href = url;
+      } else {
+        waLink.href = "#";
+      }
+    }
+
+    qtyInputs.forEach(input => input.addEventListener('input', updateTotal));
+    nickname.addEventListener('input', updateTotal);
+    id.addEventListener('input', updateTotal);
+    server.addEventListener('input', updateTotal);
+  </script>
+
+</body>
+</html>
