@@ -6,8 +6,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <img src="image/logo.png" alt="Logo Toko">
+    <span>MAHARAJA STORE</span>
+  </div>
+  <ul class="navbar-menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+</nav>
 
-  <h1>Jasa Gift Item Mobile Legends</h1>
+
+  <h1>Produk Mobile Legends</h1>
 
   <div class="container">
 
@@ -64,7 +77,15 @@
   </div>
 
   <!-- Checkout Section -->
-  <div class="checkout">
+  <!-- Tombol utama -->
+<div class="buy-wrapper">
+  <a id="open-checkout" class="buy-button" href="#">Beli via WhatsApp</a>
+</div>
+
+<!-- Modal checkout -->
+<div id="checkout-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
     <h2>Checkout</h2>
     <label>Nickname:
       <input type="text" id="nickname" placeholder="Contoh: MaharaJawa">
@@ -77,11 +98,12 @@
     </label>
 
     <p><strong>Total Belanja:</strong> Rp <span id="grand-total">0</span></p>
-    <a id="whatsapp-link" class="buy-button" href="#" target="_blank">Beli via WhatsApp</a>
+    <a id="whatsapp-link" class="buy-button" href="#" target="_blank">Kirim ke WhatsApp</a>
   </div>
+</div>
 
   <script>
-    const nomorAdmin = "6281234567890";
+    const nomorAdmin = "6285157690339";
 
     const qtyInputs = document.querySelectorAll('.qty');
     const prices = document.querySelectorAll('.price');
@@ -92,6 +114,11 @@
     const nickname = document.getElementById('nickname');
     const id = document.getElementById('id');
     const server = document.getElementById('server');
+
+    const openBtn = document.getElementById("open-checkout");
+    const modal = document.getElementById("checkout-modal");
+    const closeBtn = document.querySelector(".modal .close");
+
 
     function updateTotal() {
       let total = 0;
@@ -121,11 +148,28 @@
       }
     }
 
-    qtyInputs.forEach(input => input.addEventListener('input', updateTotal));
-    nickname.addEventListener('input', updateTotal);
-    id.addEventListener('input', updateTotal);
-    server.addEventListener('input', updateTotal);
-  </script>
+  openBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    modal.style.display = "block";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Tetap jalanin perhitungan total seperti sebelumnya
+  qtyInputs.forEach(input => input.addEventListener('input', updateTotal));
+  nickname.addEventListener('input', updateTotal);
+  id.addEventListener('input', updateTotal);
+  server.addEventListener('input', updateTotal);
+</script>
+ 
 
 </body>
 </html>

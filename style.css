@@ -1,15 +1,63 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-image: url(image/je1.jpg);
-  background-color: #f8f8f8;
+  background-image: url(image/begron.png);
+  background-size: contain;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #000000;
   padding: 40px;
   margin: 0;
   color: #333;
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #0D1E3F;
+  color: white;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-logo img {
+  height: 40px; /* ukuran logo yang ideal */
+  width: auto;
+}
+
+.navbar-logo span {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin-left: auto;
+  gap: 20px;
+}
+
+.navbar-menu li a {
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-menu li a:hover {
+  color: #00D3F8;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 40px;
+  color: white;
 }
 
 .container {
@@ -51,43 +99,60 @@ input.qty {
   border: 1px solid #ccc;
 }
 
-.checkout {
-  max-width: 400px;
-  margin: 40px auto 0;
-  background: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
 }
 
-.checkout h2 {
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 {
   margin-top: 0;
   text-align: center;
 }
 
-.checkout label {
+.modal-content label {
   display: block;
-  margin-bottom: 15px;
-  font-weight: 500;
+  margin-bottom: 12px;
 }
 
-.checkout input[type="text"] {
-  width: 95%;
+.modal-content input[type="text"] {
+  width: 100%;
   padding: 8px 10px;
   margin-top: 5px;
-  border: 1px solid #ccc;
   border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-.checkout p {
-  margin-top: 20px;
-  font-size: 16px;
+.modal-content p {
+  margin-top: 15px;
 }
 
+.modal .close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
 .buy-button {
   display: inline-block;
   width: 95%;
-  background-color: #25D366;
+  background-color: #FF2D55;
   color: white;
   padding: 14px;
   font-size: 16px;
@@ -99,5 +164,5 @@ input.qty {
 }
 
 .buy-button:hover {
-  background-color: #1ebe5d;
+  background-color: #e02045;
 }
