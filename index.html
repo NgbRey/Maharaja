@@ -5,6 +5,7 @@
   <title>MAHARAJA STORE</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/image/favico.png">
 
 </head>
 <body>
@@ -13,107 +14,75 @@
   <div class="navbar-container">
     <div class="navbar-logo">
       <img src="image/logo.png" alt="Logo Toko">
-      <span>MAHARAJA</span>
+        <span>MAHARAJA</span>
     </div>
     <ul class="navbar-menu">
       <li><a href="index.html">Home</a></li>
-      <li><a href="pesanan.html">Cek Status Pesanan</a></li>
-      
+      <li><a href="pesanan.html">Cek Status Pesanan</a></li> 
     </ul>
+    <div class="cart-icon" id="open-cart">
+  🛒  <span id="cart-count">0</span>
+    </div>
   </div>
 </nav>
+
+<!-- popup keranjang-->
+<div id="cart-sidebar" class="cart-sidebar">
+  <div class="cart-header">
+    <h2>Keranjang</h2>
+    <span class="close-cart">&times;</span>
+  </div>
+  <ul id="cart-items"></ul>
+  <p><strong>Total:</strong> Rp <span id="cart-total">0</span></p>
+  <a id="checkout-btn" class="buy-button" href="#">Checkout via WhatsApp</a>
+</div>
 
 
   <h1>Produk Mobile Legends</h1>
 
-  <div class="container">
+ <div class="container">
 
-    <!-- Produk -->
-    <div class="product">
-      <img src="image/epic.jpeg" alt="Skin Epic Shop">
-      <h3>Skin Epic Shop</h3>
-      <p>Rp <span class="price">110000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
+  <!-- Kategori: Skin -->
+  <h2 class="kategori">Kategori: Skin</h2>
 
-    <div class="product">
-      <img src="image/spesial.jpeg" alt="Skin Special Shop">
-      <h3>Skin Special Shop</h3>
-      <p>Rp <span class="price">81000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
-
-    <div class="product">
-      <img src="image/elite.jpeg" alt="Skin Elite Shop">
-      <h3>Skin Elite Shop</h3>
-      <p>Rp <span class="price">65000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
-
-    <div class="product">
-      <img src="image/Name-Change-Card.jpeg" alt="Change Name Card">
-      <h3>Change Name Card</h3>
-      <p>Rp <span class="price">30000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
-
-    <div class="product">
-      <img src="image/flag.jpeg" alt="Flag Change Card">
-      <h3>Flag Change Card</h3>
-      <p>Rp <span class="price">35000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
-
-    <div class="product">
-      <img src="image/SL card.jpeg" alt="Starlight Card">
-      <h3>Starlight Card</h3>
-      <p>Rp <span class="price">40000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
-
-    <div class="product">
-      <img src="image/SL prem.jpeg" alt="Premium Starlight Card">
-      <h3>Premium Starlight Card</h3>
-      <p>Rp <span class="price">90000</span></p>
-      Jumlah: <input type="number" class="qty" min="0" value="0">
-    </div>
-
+  <div class="product" data-name="Skin Epic Shop" data-price="110000">
+    <h3>Skin Epic Shop</h3>
+    <p>Rp <span class="price">110000</span></p>
   </div>
 
-  <!-- Checkout Section -->
-  <!-- Tombol utama -->
-<div class="buy-wrapper">
-  <a id="open-checkout" class="buy-button" href="#">Beli via WhatsApp</a>
-</div>
-
-<!-- Modal checkout -->
-<div id="checkout-modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Checkout</h2>
-    <label>Nickname:
-      <input type="text" id="nickname" placeholder="Contoh: MaharaJawa">
-    </label>
-    <label>ID:
-      <input type="text" id="id" placeholder="Contoh: 123456789">
-    </label>
-    <label>Server:
-      <input type="text" id="server" placeholder="Contoh: 1234">
-    </label>
-
-    <p><strong>Total Belanja:</strong> Rp <span id="grand-total">0</span></p>
-    <div class="buy-wrapper">
-    <a id="whatsapp-link" class="buy-button" href="#" target="_blank">Kirim ke WhatsApp</a>
-    </div>
+  <div class="product" data-name="Skin Spesial Shop" data-price="81000">
+    <h3>Skin Special Shop</h3>
+    <p>Rp <span class="price">81000</span></p>
   </div>
-</div>
 
-<!-- Modal Peringatan -->
-<div id="warning-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-warning">&times;</span>
-    <p style="text-align:center; font-weight: bold;">⚠️ Harap memilih item yang ingin dipesan terlebih dahulu.</p>
+  <div class="product" data-name="Skin Elite Shop" data-price="65000">
+    <h3>Skin Elite Shop</h3>
+    <p>Rp <span class="price">65000</span></p>
   </div>
+
+  <!-- Kategori: Item -->
+  <h2 class="kategori">Kategori: Item</h2>
+
+  <div class="product" data-name="Change Name Card" data-price="30000">
+    <h3>Change Name Card</h3>
+    <p>Rp <span class="price">30000</span></p>
+  </div>
+
+  <div class="product" data-name="Flag Change Card" data-price="35000">
+    <h3>Flag Change Card</h3>
+    <p>Rp <span class="price">35000</span></p>
+  </div>
+
+  <div class="product" data-name="Starlight Card" data-price="40000">
+    <h3>Starlight Card</h3>
+    <p>Rp <span class="price">40000</span></p>
+  </div>
+
+  <div class="product" data-name="Premium Starlight Card" data-price="90000">
+    <h3>Premium Starlight Card</h3>
+    <p>Rp <span class="price">90000</span></p>
+  </div>
+
 </div>
 
   <script src="script.js"></script>

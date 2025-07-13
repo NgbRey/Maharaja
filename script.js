@@ -1,95 +1,84 @@
-  const nomorAdmin = "6285157690339";
 
-    const qtyInputs = document.querySelectorAll('.qty');
-    const prices = document.querySelectorAll('.price');
-    const productNames = document.querySelectorAll('.product h3');
-    const totalDisplay = document.getElementById('grand-total');
-    const waLink = document.getElementById('whatsapp-link');
+  // Keranjang
+const cart = {};
+const cartItemsEl = document.getElementById('cart-items');
+const cartTotalEl = document.getElementById('cart-total');
+const cartCountEl = document.getElementById('cart-count');
 
-    const nickname = document.getElementById('nickname');
-    const id = document.getElementById('id');
-    const server = document.getElementById('server');
+function updateCartDisplay() {
+  cartItemsEl.innerHTML = '';
+  let total = 0;
+  for (let name in cart) {
+    const { price, qty } = cart[name];
+    total += price * qty;
 
-    const openBtn = document.getElementById("open-checkout");
-    const modal = document.getElementById("checkout-modal");
-    const closeBtn = document.querySelector(".modal .close");
+    const item = document.createElement('div');
+    item.classList.add('cart-item');
+
+    item.innerHTML = `
+      <span class="cart-name">${name}</span>
+      <span class="cart-info">Rp ${price * qty} • x${qty}</span>
+      <button class="remove-btn" data-name="${name}">❌</button>
+`     ;
+
+    cartItemsEl.appendChild(item);
+  }
+
+  cartTotalEl.textContent = total;
+  cartCountEl.textContent = Object.keys(cart).length;
+
+  // Update checkout link
+  const pesan = Object.entries(cart)
+    .map(([name, val]) => `- ${name} x${val.qty} = Rp${val.price * val.qty}`)
+    .join('\n');
+  const link = `https://wa.me/6285157690339?text=Halo admin, saya ingin memesan:\n${pesan}\n\nTotal: Rp${total}`;
+  document.getElementById('checkout-btn').href = link;
+}
+
+// Klik produk
+document.querySelectorAll('.product').forEach(prod => {
+  prod.addEventListener('click', () => {
+    const name = prod.dataset.name;
+    const price = parseInt(prod.dataset.price);
+    if (!cart[name]) {
+      cart[name] = { price, qty: 1 };
+    } else {
+      cart[name].qty += 1;
+    }
+  prod.classList.add('added');
+  prod.setAttribute('data-qty', `x${cart[name].qty}`);
+  
+  updateCartDisplay();
+  });
+});
 
 
-    function updateTotal() {
-      let total = 0;
-      let pesan = "Halo admin, saya ingin membeli:\n";
-      qtyInputs.forEach((input, index) => {
-        const qty = parseInt(input.value);
-        const price = parseInt(prices[index].textContent);
-        const name = productNames[index].textContent;
+// Hapus produk dari keranjang
+cartItemsEl.addEventListener('click', (e) => {
+  if (e.target.classList.contains('remove-btn')) {
+    const name = e.target.dataset.name;
+    delete cart[name];
+    updateCartDisplay();
 
-        if (qty > 0) {
-          const subtotal = qty * price;
-          total += subtotal;
-          pesan += `- ${name} x${qty} = Rp${subtotal}\n`;
-        }
-      });
-
-      totalDisplay.textContent = total;
-
-      if (total > 0) {
-        pesan += `\nTotal: Rp${total}`;
-        pesan += `\n\n📌 Data Akun ML:\n- Nickname: ${nickname.value}\n- ID: ${id.value}\n- Server: ${server.value}`;
-
-        const url = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`;
-        waLink.href = url;
-      } else {
-        waLink.href = "#";
-        
+    // Cari produk DOM dan hapus class 'added'
+    const allProducts = document.querySelectorAll('.product');
+    allProducts.forEach(prod => {
+      if (prod.dataset.name === name) {
+        prod.classList.remove('added');
+        prod.removeAttribute('data-qty');
       }
-    }
-//popup checkout
-  openBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    modal.classList.add("show");
-    modal.style.display = "block";
-  });
-
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    modal.classList.remove("show");
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target == modal) {
-      modal.style.display = "none";
-      modal.classList.remove("show");
-    }
-  });
-
-  const warningModal = document.getElementById('warning-modal');
-  const closeWarning = document.querySelector('.close-warning');
-
-  waLink.addEventListener('click', function(e) {
-  // Cek apakah total = 0 popup warning
-  const total = parseInt(totalDisplay.textContent);
-  if (total === 0) {
-    e.preventDefault(); // Mencegah link WhatsApp terbuka
-    warningModal.classList.add("show");
-    warningModal.style.display = "block"; // Tampilkan popup
+    });
   }
 });
 
-  closeWarning.addEventListener('click', () => {
-  warningModal.style.display = "none";
-  warningModal.classList.remove("show");
-  });
+const cartSidebar = document.getElementById('cart-sidebar');
+const closeCartBtn = document.querySelector('.close-cart');
+const openCartBtn = document.getElementById('open-cart');
 
-  window.addEventListener("click", (e) => {
-  if (e.target === warningModal) {
-    warningModal.style.display = "none";
-    warningModal.classList.remove("show");
-      }
-    });
+openCartBtn.addEventListener('click', () => {
+  cartSidebar.classList.add('show');
+});
 
-
-  // Tetap jalanin perhitungan total seperti sebelumnya
-  qtyInputs.forEach(input => input.addEventListener('input', updateTotal));
-  nickname.addEventListener('input', updateTotal);
-  id.addEventListener('input', updateTotal);
-  server.addEventListener('input', updateTotal);
+closeCartBtn.addEventListener('click', () => {
+  cartSidebar.classList.remove('show');
+});
