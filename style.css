@@ -63,6 +63,12 @@ body {
   color: #ff2d55;
 }
 
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .cart-icon {
   position: relative;
   cursor: pointer;
