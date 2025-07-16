@@ -1,5 +1,3 @@
-
-  // Keranjang
 const cart = {};
 const cartItemsEl = document.getElementById('cart-items');
 const cartTotalEl = document.getElementById('cart-total');
@@ -14,20 +12,17 @@ function updateCartDisplay() {
 
     const item = document.createElement('div');
     item.classList.add('cart-item');
-
     item.innerHTML = `
       <span class="cart-name">${name}</span>
       <span class="cart-info">Rp ${price * qty} • x${qty}</span>
       <button class="remove-btn" data-name="${name}">❌</button>
-`     ;
-
+    `;
     cartItemsEl.appendChild(item);
   }
 
   cartTotalEl.textContent = total;
   cartCountEl.textContent = Object.keys(cart).length;
 
-  // Update checkout link
   const pesan = Object.entries(cart)
     .map(([name, val]) => `- ${name} x${val.qty} = Rp${val.price * val.qty}`)
     .join('\n');
@@ -35,7 +30,6 @@ function updateCartDisplay() {
   document.getElementById('checkout-btn').href = link;
 }
 
-// Klik produk
 document.querySelectorAll('.product').forEach(prod => {
   prod.addEventListener('click', () => {
     const name = prod.dataset.name;
@@ -45,24 +39,18 @@ document.querySelectorAll('.product').forEach(prod => {
     } else {
       cart[name].qty += 1;
     }
-  prod.classList.add('added');
-  prod.setAttribute('data-qty', `x${cart[name].qty}`);
-  
-  updateCartDisplay();
+    prod.classList.add('added');
+    prod.setAttribute('data-qty', `x${cart[name].qty}`);
+    updateCartDisplay();
   });
 });
 
-
-// Hapus produk dari keranjang
 cartItemsEl.addEventListener('click', (e) => {
   if (e.target.classList.contains('remove-btn')) {
     const name = e.target.dataset.name;
     delete cart[name];
     updateCartDisplay();
-
-    // Cari produk DOM dan hapus class 'added'
-    const allProducts = document.querySelectorAll('.product');
-    allProducts.forEach(prod => {
+    document.querySelectorAll('.product').forEach(prod => {
       if (prod.dataset.name === name) {
         prod.classList.remove('added');
         prod.removeAttribute('data-qty');
@@ -71,14 +59,44 @@ cartItemsEl.addEventListener('click', (e) => {
   }
 });
 
-const cartSidebar = document.getElementById('cart-sidebar');
-const closeCartBtn = document.querySelector('.close-cart');
-const openCartBtn = document.getElementById('open-cart');
-
-openCartBtn.addEventListener('click', () => {
-  cartSidebar.classList.add('show');
+document.getElementById('open-cart').addEventListener('click', () => {
+  document.getElementById('cart-sidebar').classList.add('show');
+});
+document.querySelector('.close-cart').addEventListener('click', () => {
+  document.getElementById('cart-sidebar').classList.remove('show');
 });
 
-closeCartBtn.addEventListener('click', () => {
-  cartSidebar.classList.remove('show');
-});
+// === SLIDESHOW ===
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slide");
+const nextBtn = document.querySelector(".next-slide");
+const prevBtn = document.querySelector(".prev-slide");
+
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.remove("active");
+    slide.style.left = "100%";
+  });
+
+  slides[index].classList.add("active");
+  slides[index].style.left = "0";
+}
+
+function nextSlide() {
+  slideIndex = (slideIndex + 1) % slides.length;
+  showSlide(slideIndex);
+}
+
+function prevSlide() {
+  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+  showSlide(slideIndex);
+}
+
+if (nextBtn && prevBtn && slides.length > 0) {
+  nextBtn.addEventListener("click", nextSlide);
+  prevBtn.addEventListener("click", prevSlide);
+  showSlide(slideIndex); // Tampilkan slide pertama
+  setInterval(nextSlide, 4000); // Autoplay tiap 4 detik
+}
+
+
